@@ -1,10 +1,11 @@
 import React from 'react';
+import BasicLayout from "../layouts/BasicLayout";
 
 function MainPage(props) {
     return (
-        <div className={'text-3xl'}>
-            <div>Main Page</div>
-        </div>
+        <BasicLayout>
+            <div className={'text-3xl'}>Main Page</div>
+        </BasicLayout>
     );
 }
 
