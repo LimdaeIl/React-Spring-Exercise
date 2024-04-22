@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/React-Spring-Exercise.iml" filepath="$PROJECT_DIR$/.idea/React-Spring-Exercise.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/mallapi.main.iml" filepath="$PROJECT_DIR$/.idea/modules/mallapi.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mallapi.test.iml" filepath="$PROJECT_DIR$/.idea/modules/mallapi.test.iml" />
     </modules>
   </component>
 </project>
