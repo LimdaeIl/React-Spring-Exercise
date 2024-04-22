@@ -1,6 +1,7 @@
 package org.zerock.mallapi.dto;
 
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.List;
@@ -20,6 +21,7 @@ public class PageResponseDTO<E> {
 
     private int totalCount, prevPage, nextPage, totalPage, current; // current 페이지는 이미 PageRequestDTO 안에 있지만 생성했습니다.
 
+    @Builder(builderMethodName = "withAll")
     public PageResponseDTO(List<E> dtoList, PageRequestDTO pageRequestDTO, long total) {
 
         this.dtoList = dtoList;

@@ -2,6 +2,7 @@ package org.zerock.mallapi.repository;
 
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -94,9 +95,10 @@ class TodoRepositoryTest {
     }
 
     @Test
+    @Disabled
     public void testSearch1() {
 
-        todoRepository.search1();
+//        todoRepository.search1();
 
     }
 }

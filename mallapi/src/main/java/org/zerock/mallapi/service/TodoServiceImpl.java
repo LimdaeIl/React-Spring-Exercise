@@ -2,12 +2,17 @@ package org.zerock.mallapi.service;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.zerock.mallapi.domain.Todo;
+import org.zerock.mallapi.dto.PageRequestDTO;
+import org.zerock.mallapi.dto.PageResponseDTO;
 import org.zerock.mallapi.dto.TodoDTO;
 import org.zerock.mallapi.repository.TodoRepository;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Log4j2
@@ -55,5 +60,24 @@ public class TodoServiceImpl implements TodoService {
     public void remove(Long tno) {
 
         todoRepository.deleteById(tno);
+    }
+
+    @Override
+    public PageResponseDTO<TodoDTO> getList(PageRequestDTO pageRequestDTO) {
+
+        // JPA
+        Page<Todo> result = todoRepository.search1(pageRequestDTO);
+
+        // Todo List 가 TodoDTO List 가 되어야 합니다.
+        List<TodoDTO> dtoList = result.get().map(this::entityToDTO).toList();
+
+        PageResponseDTO<TodoDTO> responseDTO =
+                PageResponseDTO.<TodoDTO>withAll()
+                        .dtoList(dtoList)
+                        .pageRequestDTO(pageRequestDTO)
+                        .total(result.getTotalElements())
+                        .build();
+
+        return responseDTO;
     }
 }
