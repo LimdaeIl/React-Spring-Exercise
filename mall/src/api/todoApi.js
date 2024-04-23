@@ -19,4 +19,3 @@ export const getList = async (pageParam) => {
 
     return res.data;
 }
-
