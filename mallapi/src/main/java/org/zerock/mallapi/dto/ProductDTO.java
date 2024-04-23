@@ -30,6 +30,6 @@ public class ProductDTO {
     private List<MultipartFile> files = new ArrayList<>(); // 등록되는 파일 리스트
 
     @Builder.Default
-    private List<String> uploadFileNames = new ArrayList<>(); // 저장된 파일 리스트
+    private List<String> uploadedFileNames = new ArrayList<>(); // 저장된 파일 리스트
 
 }
