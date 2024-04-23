@@ -14,7 +14,9 @@ import org.zerock.mallapi.dto.PageResponseDTO;
 import org.zerock.mallapi.dto.ProductDTO;
 import org.zerock.mallapi.repository.ProductRepository;
 
+import javax.swing.text.html.Option;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Log4j2
@@ -65,4 +67,105 @@ public class ProductServiceImpl implements ProductService {
                 .pageRequestDTO(pageRequestDTO)
                 .build();
     }
+
+    @Override
+    public Long register(ProductDTO productDTO) {
+
+        Product product = dtoToEntity(productDTO);
+
+        log.info("-------------------------------");
+        log.info(product);
+        log.info(product.getImageList());
+
+        Long pno = productRepository.save(product).getPno();
+
+        return pno;
+    }
+
+    @Override
+    public ProductDTO get(Long pno) {
+
+        Optional<Product> result = productRepository.findById(pno);
+
+        Product product = result.orElseThrow();
+
+        return entityToDTO(product);
+    }
+
+    @Override
+    public void modify(ProductDTO productDTO) {
+        // 문제는 파일이 변경 된 건지, 아닌지 알 수가 없습니다.
+
+        // 조회
+        Optional<Product> result = productRepository.findById(productDTO.getPno());
+
+        Product product = result.orElseThrow();
+
+        // 변경 내용을 반영
+        product.changePrice(productDTO.getPrice());
+        product.changeName(productDTO.getPname());
+        product.changeDesc(productDTO.getPdesc());
+        product.changeDel(productDTO.isDelFlag());
+
+        // 이미지를 처리하기 위해서 목록을 비워야 합니다.
+        List<String> uploadFileNames = productDTO.getUploadFileNames(); // 이전에 저장된 이미지 이름들
+        product.clearList(); // 이미지 이름 리스트 초기화
+
+        if (uploadFileNames != null && !uploadFileNames.isEmpty()) {
+            uploadFileNames.forEach(product::addImageString);
+        }
+
+        // 저장
+        productRepository.save(product);
+    }
+
+    @Override
+    public void remove(Long pno) {
+
+        productRepository.deleteById(pno);
+
+    }
+
+    private ProductDTO entityToDTO(Product product) {
+
+        ProductDTO productDTO = ProductDTO.builder()
+                .pno(product.getPno())
+                .pdesc(product.getPdesc())
+                .pname(product.getPname())
+                .price(product.getPrice())
+                .delFlag(product.isDelFlag())
+                .build();
+
+        List<ProductImage> imageList = product.getImageList();
+
+        if (imageList == null || imageList.isEmpty()) {
+            return productDTO;
+        }
+
+        List<String> fileNameList = imageList.stream().map(ProductImage::getFileName).toList();
+
+        productDTO.setUploadFileNames(fileNameList);
+
+        return productDTO;
+    }
+
+    private Product dtoToEntity(ProductDTO productDTO) {
+        Product product = Product.builder()
+                .pno(productDTO.getPno())
+                .pdesc(productDTO.getPdesc())
+                .pname(productDTO.getPname())
+                .price(productDTO.getPrice())
+                .build();
+
+        List<String> uploadFileNames = productDTO.getUploadFileNames();
+
+        if (uploadFileNames == null || uploadFileNames.size() == 0) {
+            return product;
+        }
+
+        uploadFileNames.forEach(product::addImageString);
+
+        return product;
+    }
+
 }
