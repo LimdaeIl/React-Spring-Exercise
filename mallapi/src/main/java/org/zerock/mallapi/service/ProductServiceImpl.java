@@ -14,7 +14,6 @@ import org.zerock.mallapi.dto.PageResponseDTO;
 import org.zerock.mallapi.dto.ProductDTO;
 import org.zerock.mallapi.repository.ProductRepository;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 

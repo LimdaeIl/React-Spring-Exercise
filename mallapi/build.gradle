@@ -44,6 +44,10 @@ dependencies {
     // 3. thumbnailator 추가하기
     // https://mvnrepository.com/artifact/net.coobird/thumbnailator
     implementation 'net.coobird:thumbnailator:0.4.19'
+
+    // 4. 스프링 시큐리티 추가하기
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    testImplementation 'org.springframework.security:spring-security-test'
 }
 
 tasks.named('test') {
