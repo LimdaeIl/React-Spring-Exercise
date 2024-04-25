@@ -31,13 +31,8 @@ class MemberRepositoryTest {
                     .build();
 
             member.addRole(MemberRole.USER);
-            if (i > 5) {
-                member.addRole(MemberRole.MANAGER);
-            }
-
-            if (i >= 8) {
-                member.addRole(MemberRole.ADMIN);
-            }
+            if (i > 5) {member.addRole(MemberRole.MANAGER);}
+            if (i >= 8) {member.addRole(MemberRole.ADMIN);}
             memberRepository.save(member);
 
         } // end for

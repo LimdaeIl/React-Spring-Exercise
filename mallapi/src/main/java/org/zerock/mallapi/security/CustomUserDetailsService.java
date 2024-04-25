@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Service
 @Log4j2
-public class CustomDetailsService implements UserDetailsService {
+public class CustomUserDetailsService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
 
@@ -36,10 +36,11 @@ public class CustomDetailsService implements UserDetailsService {
                 member.getNickname(),
                 member.isSocial(),
                 member.getMemberRoleList().stream()
-                        .map(Enum::name).toList());
+                        .map(memberRole -> memberRole.name()).collect(Collectors.toList()));
 
         log.info(memberDTO);
+        log.info("This is memberDTO.getRoleNames(): {}", memberDTO.getRoleNames());
 
-        return null;
+        return memberDTO;
     }
 }

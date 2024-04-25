@@ -1,5 +1,8 @@
 package org.zerock.mallapi.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
@@ -8,6 +11,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Getter
+@Setter
+@ToString
 public class MemberDTO extends User {
 
     private String email;
@@ -21,11 +27,8 @@ public class MemberDTO extends User {
     private List<String> roleNames = new ArrayList<>();
 
     public MemberDTO(String email, String pw, String nickname, boolean social, List<String> roleNames) {
-        super(
-                email,
-                pw,
-                roleNames.stream().map(
-                        str -> new SimpleGrantedAuthority("ROLE_" + str)).toList());
+        super(email, pw, roleNames.stream().map(str ->
+                new SimpleGrantedAuthority("ROLE_" + str)).toList());
 
         this.email = email;
         this.pw = pw;
@@ -41,6 +44,7 @@ public class MemberDTO extends User {
         dataMap.put("pw", pw);
         dataMap.put("nickname", nickname);
         dataMap.put("social", social);
+        dataMap.put("roleNames", roleNames); // roleNames 추가 했습니다 :)
 
         return dataMap;
     }
