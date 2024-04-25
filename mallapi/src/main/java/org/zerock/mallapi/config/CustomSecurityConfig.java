@@ -13,6 +13,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.zerock.mallapi.security.handler.APILoginFailHandler;
 import org.zerock.mallapi.security.handler.APILoginSuccessHandler;
 
 import java.util.List;
@@ -40,6 +41,7 @@ public class CustomSecurityConfig {
         http.formLogin(form -> {
             form.loginPage("/api/member/login");
             form.successHandler(new APILoginSuccessHandler());
+            form.failureHandler(new APILoginFailHandler());
         });
 
         return http.build();
